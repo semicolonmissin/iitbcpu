@@ -8,7 +8,7 @@ entity CCL is
     );
 end entity;
 
-architecture bhv of CCM is
+architecture bhv of CCL is
 begin
 process(A)
     variable res: std_logic_vector(15 downto 0) := (others => '0');
