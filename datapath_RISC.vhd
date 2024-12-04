@@ -5,13 +5,13 @@ entity data_path is
     port (
         state : in integer;
         alu_z : in std_logic;
-        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic
+        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic
     );
 end entity;
 
 architecture struct of data_path is
     signal m1_var, m2_var, m3_var, m4_var, m5_var, m6_var, m7_var, m8_var, m9_var, m10_var,
-           m11_var, m12_var, m13_var, m14_var, pc_w_var, mw_var, ir_w_var, rf_w_var,
+           m11_var, m12_var, m13_var, pc_w_var, mw_var, ir_w_var, rf_w_var,
            t1_w_var, t2_w_var, t3_w_var, z_en_var : std_logic;
 
 begin
@@ -31,7 +31,6 @@ begin
         m11_var   <= '0';
         m12_var   <= '0';
         m13_var   <= '0';
-        m14_var   <= '0';
         pc_w_var  <= '0';
         mw_var    <= '0';
         ir_w_var  <= '0';
@@ -96,18 +95,12 @@ begin
                 t3_w_var <= '1';
                 m13_var <= '1';
 
-            when 12 =>
-                m14_var <= '1';
-                t2_w_var <= '1';
-
             when 13 =>
                 rf_w_var <= '1';
-                t3_w_var <= '1';
 		m6_var <= '1';
 
             when 14 =>
                 rf_w_var <= '1';
-                t3_w_var <= '1';
 		m5_var <= '1';
 
             when 15 =>
@@ -146,7 +139,7 @@ begin
                 m9_var <= '1';
 
             when 24 =>
-                m14_var <= alu_z;
+                m13_var <= alu_z;
                 z_en_var <= '1';
 		pc_w_var <= '1';
 
