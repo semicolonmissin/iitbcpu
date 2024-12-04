@@ -16,7 +16,7 @@ architecture struct of Register_file is
 	signal R0: std_logic_vector(15 downto 0):="1111111111111111";
 	signal R1: std_logic_vector(15 downto 0):="0000000000000011";
 	
-	component MUX_8x1 is 
+	component MUX_16bit_8x1 is 
 		port( A,B,C,D,E,F,G,H: in std_logic_vector(15 downto 0);sel0,sel1,sel2 : in std_logic; Y: out std_logic_vector(15 downto 0));
 	end component;
 
@@ -49,8 +49,8 @@ architecture struct of Register_file is
 		end if;
 	end process write_process;
 	
-	Mux1: MUX_8x1 port map (R0,R1,R2,R3,R4,R5,R6,R7,RF_A1(0),RF_A1(1),RF_A1(2),RF_D1);
-	Mux2: MUX_8x1 port map (R0,R1,R2,R3,R4,R5,R6,R7,RF_A2(0),RF_A2(1),RF_A2(2),RF_D2);
+	Mux1: MUX_16bit_8x1 port map (R0,R1,R2,R3,R4,R5,R6,R7,RF_A1(0),RF_A1(1),RF_A1(2),RF_D1);
+	Mux2: MUX_16bit_8x1 port map (R0,R1,R2,R3,R4,R5,R6,R7,RF_A2(0),RF_A2(1),RF_A2(2),RF_D2);
 	
 	RF_0 <= R0;
 	RF_1 <= R1;
