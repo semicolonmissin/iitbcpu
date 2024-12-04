@@ -63,7 +63,7 @@ begin
         end case;
 
         -- Zero flag
-        if diff_result = (others => '0') then
+        if result_temp = (others => '0') then
             Z <= '1';
         else
             Z <= '0';
