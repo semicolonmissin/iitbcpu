@@ -1,0 +1,129 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+package MUX is
+	component MUX_2x1 is
+		port(a,b,I: in std_logic;
+				y: out std_logic);
+	end component;
+	
+	component MUX_4x1 is
+		port(a,b,c,d: in std_logic;
+				I1,I2: in std_logic;
+					y: out std_logic);
+	end component;
+	
+	component MUX_5x1 is
+		port(a,b,c,d,e: in std_logic;
+						I1,I2,I3: in std_logic;
+							y: out std_logic);
+	end component;
+	
+	component MUX_8x1 is
+		port(a,b,c,d,e,f,g,h: in std_logic;
+						I1,I2,I3: in std_logic;
+							y: out std_logic);
+	end component;
+end package;
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity MUX_2x1 is
+    port(a,b,I: in std_logic;
+				y: out std_logic);
+end entity;
+
+architecture Behavioral of mux_2x1 is
+begin
+    process(a, b, I)
+    begin
+        if I = '0' then
+            y <= a;
+        else
+            y <= b;
+        end if;
+    end process;
+end architecture;
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity MUX_4x1 is
+    port(a,b,c,d: in std_logic;
+				I1,I2: in std_logic;
+					y: out std_logic);
+end entity;
+
+architecture Behavioral of MUX_4x1 is
+begin
+    process(a,b,c,d,I1,I2)
+    variable sel : std_logic_vector(1 downto 0);
+    begin
+        sel := I1 & I2;
+        case sel is
+            when "00" => y <= a;
+            when "01" => y <= b;
+            when "10" => y <= c;
+            when "11" => y <= d;
+            when others => y <= '0';
+        end case;
+    end process;
+end architecture;
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity MUX_5x1 is
+    port(a,b,c,d,e: in std_logic;
+						I1,I2,I3: in std_logic;
+							y: out std_logic);
+end entity;
+
+architecture Behavioral of MUX_5x1 is
+begin
+    process(a,b,c,d,e,I1,I2,I3)
+    variable sel : std_logic_vector(2 downto 0);
+    begin
+        sel := I1 & I2 & I3;
+
+        case sel is
+            when "000" => y <= a;
+            when "001" => y <= b;
+            when "010" => y <= c;
+            when "011" => y <= d;
+            when "100" => y <= e;
+            when others => y <= '0';
+        end case;
+    end process;
+end architecture;
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity MUX_8x1 is
+    port(a,b,c,d,e,f,g,h: in std_logic;
+						I1,I2,I3: in std_logic;
+							y: out std_logic);
+end entity;
+
+architecture Behavioral of MUX_8x1 is
+begin
+    process(a,b,c,d,e,f,g,h,I1,I2,I3)
+    variable sel : std_logic_vector(2 downto 0);
+    begin
+        sel := I1 & I2 & I3;
+
+        case sel is
+            when "000" => y <= a;
+            when "001" => y <= b;
+            when "010" => y <= c;
+            when "011" => y <= d;
+            when "100" => y <= e;
+				when "101" => y <= f;
+				when "110" => y <= g;
+				when "111" => y <= h;
+            when others => y <= '0';
+        end case;
+    end process;
+end architecture;
