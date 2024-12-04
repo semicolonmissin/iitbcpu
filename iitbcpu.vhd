@@ -94,7 +94,7 @@ architecture struct of iitbcpu is
 	end component;
 	
 	component n1_bit_left is
-    port (a: in std_logic_vector(15 downto 0);  
+    port (a: in std_logic_vector(14 downto 0);  
           o: out std_logic_vector(15 downto 0)); 
 	end component;
 ---------------------------------------------------------------------------------------
