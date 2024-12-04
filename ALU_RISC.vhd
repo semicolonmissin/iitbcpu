@@ -16,6 +16,7 @@ architecture Behavioral of ALU_RISC is
     signal sum_result, diff_result : std_logic_vector(16 downto 0); -- Extended for carry
     signal mult_result             : std_logic_vector(7 downto 0);  
     signal A_4bit, B_4bit          : std_logic_vector(3 downto 0);  -- 4-bit inputs for multiplication
+    signal result_temp             : std_logic_vector(15 downto 0);
 begin
     process(A, B, Operator)
     begin
@@ -26,38 +27,38 @@ begin
         case Operator is
             when "000" => -- Addition
                 sum_result <= std_logic_vector(unsigned(A) + unsigned(B));  -- Convert to unsigned and add
-                Result <= sum_result(15 downto 0);
+                result_temp <= sum_result(15 downto 0);
                 Cout <= sum_result(16);
 
             when "100" => -- Subtraction
                 diff_result <= std_logic_vector(unsigned(A) - unsigned(B));  -- Convert to unsigned and subtract
-                Result <= diff_result(15 downto 0);
+                result_temp <= diff_result(15 downto 0);
                 Cout <= diff_result(16);
 
             when "001" => -- AND Operator
-                Result <= A and B;
+                result_temp <= A and B;
                 Cout <= '0';
 
             when "010" => -- OR Operator
-                Result <= A or B;
+                result_temp <= A or B;
                 Cout <= '0';
 
             when "011" => -- NOT Operator
-                Result <= not A;
+                result_temp <= not A;
                 Cout <= '0';
 
             when "101" => -- 4-bit Multiplication
                 mult_result <= std_logic_vector(unsigned(A_4bit) * unsigned(B_4bit));  -- Convert to unsigned for multiplication
-                Result <= (others => '0');         
-                Result(7 downto 0) <= mult_result; 
+                result_temp <= (others => '0');         
+                result_temp(7 downto 0) <= mult_result; 
                 Cout <= '0';                      -- No carry for 4-bit multiplication
 
             when "110" => -- Logical Implication 
-                Result <= not A or B;
+                result_temp <= not A or B;
                 Cout <= '0';
 
             when others => 
-                Result <= (others => '0');
+                result_temp <= (others => '0');
                 Cout <= '0';
         end case;
 
@@ -67,5 +68,7 @@ begin
         else
             Z <= '0';
         end if;
+
+    Result <= result_temp;
     end process;
 end architecture;
