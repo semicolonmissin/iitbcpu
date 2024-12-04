@@ -75,8 +75,7 @@ begin
 						  next_state <= s8;
 					 elsif operation = "0000" then 
 						  next_state <= s5;
-	    end if;
-					 
+					 end if;
             when s5 =>
                 next_state <= s0;
 					 
@@ -85,8 +84,8 @@ begin
 					 
             when s7 =>
                 next_state <= s5;
-	    
-	     when s8 =>
+					 
+	    when s8 =>
                 next_state <= s0;
 					 
             when s9 =>
@@ -138,20 +137,20 @@ begin
             when s23 =>
                 next_state <= s24;
 				
-				when s24 =>
-					 next_state <= s0;
+	    when s24 =>
+	        next_state <= s0;
 				
-				when s25 =>
-					 if (operation(1) = '1') then
+	    when s25 =>
+		if (operation(1) = '1') then
                     next_state <= s27;
                 elsif (operation(1) = '0') then
                     next_state <= s26;
                 end if;
 					 
-				when s26 => 
-					 next_state <= s0;
-	    
-	     when s27 =>
+	   when s26 => 
+		next_state <= s0;
+					 
+	   when s27 =>
                 next_state <= s0;
 					 
         end case;
