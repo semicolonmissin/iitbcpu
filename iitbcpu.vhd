@@ -113,7 +113,7 @@ architecture struct of iitbcpu is
 	
 		
 	ProgramCounter      : Reg16 port map (clk, PC_W, M1_out, PC_out);
-	MemoryInstance      : Memory port map (T1_out, M2_out, Clk, MW, mem_out);
+	MemoryInstance      : Memory port map (M2_out, T1_out, Clk, MW, mem_out);
 	InstructionRegister : Reg16 port map (clk, IR_W, mem_out, IR_out);
 	RegisterFile        : Register_file port map (IR_out(11 downto 9), IR_out(8 downto 6), M34_out, M56_out, PC_out, RF_W, Clk, RF_D1, RF_D2, RF_all0, RF_all1, RF_all2, RF_all3, RF_all4, RF_all5, RF_all6, RF_all7);
 	
