@@ -22,7 +22,7 @@ architecture Struct of Testbench is
 begin
     DUT: CPU port map (Clk, Reset, PC, IR, final_s, RF_final0, RF_final1, RF_final2, RF_final3, RF_final4, RF_final5, RF_final6, RF_final7);
 
-	 Reset <= '0';
-	 Clk<= not Clk after 100 ns;
+    Reset <= '0';
+    Clk<= not Clk after 100 ns;
 
 end architecture Struct;
