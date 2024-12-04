@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_arith.all;
-use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;  -- Use numeric_std for arithmetic operations
 
 entity ALU_RISC is
     Port (
@@ -26,12 +25,12 @@ begin
 
         case Operator is
             when "000" => -- Addition
-                sum_result <= ('0' & A) + ('0' & B);
+                sum_result <= std_logic_vector(unsigned(A) + unsigned(B));  -- Convert to unsigned and add
                 Result <= sum_result(15 downto 0);
                 Cout <= sum_result(16);
 
             when "100" => -- Subtraction
-                diff_result <= ('0' & A) - ('0' & B);
+                diff_result <= std_logic_vector(unsigned(A) - unsigned(B));  -- Convert to unsigned and subtract
                 Result <= diff_result(15 downto 0);
                 Cout <= diff_result(16);
 
@@ -48,7 +47,7 @@ begin
                 Cout <= '0';
 
             when "101" => -- 4-bit Multiplication
-                mult_result <= std_logic_vector(unsigned(A_4bit) * unsigned(B_4bit));
+                mult_result <= std_logic_vector(unsigned(A_4bit) * unsigned(B_4bit));  -- Convert to unsigned for multiplication
                 Result <= (others => '0');         
                 Result(7 downto 0) <= mult_result; 
                 Cout <= '0';                      -- No carry for 4-bit multiplication
@@ -63,19 +62,10 @@ begin
         end case;
 
         -- Zero flag
-        if Result = (others => '0') then
+        if diff_result = (others => '0') then
             Z <= '1';
         else
             Z <= '0';
         end if;
     end process;
 end architecture;
-
-
-
-
-
-
-
-
-
