@@ -85,6 +85,9 @@ begin
 					 
             when s7 =>
                 next_state <= s5;
+	    
+	     when s8 =>
+                next_state <= s0;
 					 
             when s9 =>
                 next_state <= s8;
@@ -147,6 +150,9 @@ begin
 					 
 				when s26 => 
 					 next_state <= s0;
+	    
+	     when s27 =>
+                next_state <= s0;
 					 
         end case;
     end process;
@@ -208,6 +214,8 @@ begin
                 state_out <= 25;
             when s26 =>
                 state_out <= 26;
+	    when s27 =>
+                state_out <= 27;
         end case;
     end process;
 
