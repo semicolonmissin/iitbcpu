@@ -113,7 +113,7 @@ architecture struct of iitbcpu is
 	
 		
 	ProgramCounter      : Reg16 port map (clk, PC_W, M1_out, PC_out);
-	MemoryInstance      : Memory port map (M2_out, T1_out, Clk, MW, mem_out);
+	MemoryInstance      : Memory port map (T1_out, M2_out, Clk, MW, mem_out);
 	InstructionRegister : Reg16 port map (clk, IR_W, mem_out, IR_out);
 	RegisterFile        : Register_file port map (IR_out(11 downto 9), IR_out(8 downto 6), M34_out, M56_out, PC_out, RF_W, Clk, RF_D1, RF_D2, RF_all0, RF_all1, RF_all2, RF_all3, RF_all4, RF_all5, RF_all6, RF_all7);
 	
@@ -121,13 +121,13 @@ architecture struct of iitbcpu is
 	ALU_inst            : ALU_RISC port map (M78_out, M91011_out, state_5, ALU_C, ALU_Z);
 	
 	T1                  : reg16 port map (clk, T1_W, RF_D1, T1_out);
-	T2                  : reg16 port map (clk, T2_W, M14_out, T2_out);
+	T2                  : reg16 port map (clk, T2_W, RF_D2, T2_out);
 	T3                  : reg16 port map (clk, T3_W, M12_out, T3_out);
 	
 	SE1                 : SE_9to16 port map (IR_out(8 downto 0), SE9_out);
 	SE2                 : SE_6to16 port map (IR_out(5 downto 0), SE6_out);
-	SE3	            : SE_6to15 port map (IR_out(5 downto 0), SE6_15_out);
-	left_shift	    : n1_bit_left port map (SE6_15_out, shifted_out);
+	SE3	              : SE_6to15 port map (IR_out(5 downto 0), SE6_15_out);
+	left_shift	    	  : n1_bit_left port map (SE6_15_out, shifted_out);
 	Concat_msb          : CCM port map (IR_out(7 downto 0), CCM_out);
 	Concat_lsb          : CCL port map (IR_out(7 downto 0), CCL_out);
 	
