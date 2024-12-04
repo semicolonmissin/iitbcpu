@@ -55,6 +55,7 @@ begin
 
             when 3 =>
                 t1_w_var <= '1';
+		m10_var <= '1';
 
             when 4 =>
                 m8_var <= '1';
@@ -102,10 +103,12 @@ begin
             when 13 =>
                 rf_w_var <= '1';
                 t3_w_var <= '1';
+		m6_var <= '1';
 
             when 14 =>
                 rf_w_var <= '1';
                 t3_w_var <= '1';
+		m5_var <= '1';
 
             when 15 =>
                 t2_w_var <= '1';
@@ -119,6 +122,7 @@ begin
             when 17 =>
                 m2_var <= '1';
                 m12_var <= '1';
+		t3_w_var <= '1';
 
             when 18 =>
                 rf_w_var <= '1';
@@ -144,6 +148,7 @@ begin
             when 24 =>
                 m14_var <= alu_z;
                 z_en_var <= '1';
+		pc_w_var <= '1';
 
             when 25 =>
                 m5_var <= '1';
@@ -153,9 +158,11 @@ begin
             when 26 =>
                 m9_var <= '1';
                 m13_var <= '1';
+		pc_w_var <= '1';
 
             when 27 =>
                 m1_var <= '1';
+		pc_w_var <= '1';
 
             when others =>
                 m1_var    <= '0';
