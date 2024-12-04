@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity n1_bit_left is
-    port (a: in std_logic_vector(15 downto 0);  
+    port (a: in std_logic_vector(14 downto 0);  
           o: out std_logic_vector(15 downto 0)); 
 end entity;
 
