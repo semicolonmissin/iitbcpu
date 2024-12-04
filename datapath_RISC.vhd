@@ -6,7 +6,7 @@ entity data_path is
         state : in integer;
         alu_z : in std_logic;
         m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic;
-	op : out std_logic_vector(2 downto 0);
+	op : out std_logic_vector(2 downto 0)
     );
 end entity;
 
