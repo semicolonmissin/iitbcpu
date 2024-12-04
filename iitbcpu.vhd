@@ -10,7 +10,7 @@ entity iitbcpu is
 	port(Clk, reset: in std_logic;
 			ProgCount, InstReg: out std_logic_vector(15 downto 0);
 			FinalState: out integer;
-			RF_final0, RF_final1, RF_final2, RF_final3, RF_final4, RF_final5, RF_final6: out std_logic_vector(15 downto 0));
+			RF_final0, RF_final1, RF_final2, RF_final3, RF_final4, RF_final5, RF_final6, RF_final7: out std_logic_vector(15 downto 0));
 end entity;
 
 architecture struct of iitbcpu is
