@@ -5,7 +5,7 @@ entity data_path is
     port (
         state : in integer;
         alu_z : in std_logic;
-        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic
+        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en, op : out std_logic
     );
 end entity;
 
@@ -61,6 +61,7 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
+		op <= '000';
 
             when 5 =>
                 m4_var <= '1';
@@ -70,11 +71,13 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
+		op <= '100';
 
             when 7 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
+		op <= '101;
 
             when 8 =>
                 m3_var <= '1';
@@ -84,17 +87,20 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
+		op <= '001';
 
             when 10 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
+		op <= '010';
 
             when 11 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
                 m13_var <= '1';
+		op <= '110';
 
             when 12 =>
                 m14_var <= '1';
@@ -118,6 +124,7 @@ begin
                 m8_var <= '1';
                 m10_var <= '1';
                 t3_w_var <= '1';
+		op <= '000';
 
             when 17 =>
                 m2_var <= '1';
@@ -141,6 +148,7 @@ begin
             when 22 =>
                 m8_var <= '1';
                 m11_var <= '1';
+		op <= '100';
 
             when 23 =>
                 m9_var <= '1';
@@ -159,6 +167,7 @@ begin
                 m9_var <= '1';
                 m13_var <= '1';
 		pc_w_var <= '1';
+		op <= '000';
 
             when 27 =>
                 m1_var <= '1';
