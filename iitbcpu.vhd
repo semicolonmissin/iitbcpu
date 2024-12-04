@@ -84,11 +84,23 @@ architecture struct of iitbcpu is
         C: out std_logic_vector(15 downto 0)
     );
 	end component;
+	
+	component SE_6to15 is
+    port (
+        A: in std_logic_vector(5 downto 0);
+        C: out std_logic_vector(14 downto 0)
+    );
+	end component;
+	
+	component n1_bit_left is
+    port (a: in std_logic_vector(15 downto 0);  
+          o: out std_logic_vector(15 downto 0)); 
+	end component;
 ---------------------------------------------------------------------------------------
 	signal IR_out, PC_out, mem_out, RF_D1, RF_D2 : std_logic_vector(15 downto 0);
 	signal M1_out, M2_out,M56_out, M78_out, M91011_out, M12_out, M13_out, M14_out: std_logic_vector(15 downto 0);
 	signal M34_out: std_logic_vector(2 downto 0);
-	signal ALU_C, T1_out, T2_out, T3_out, SE9_out, SE6_out, CCM_out, CCL_out: std_logic_vector(15 downto 0);
+	signal ALU_C, T1_out, T2_out, T3_out, SE9_out, SE6_out, SE6_15_out,shifted_out, CCM_out, CCL_out: std_logic_vector(15 downto 0);
 	signal PC_W, IR_W, T1_W, T2_W, T3_W, RF_W, MW: std_logic;
 	signal M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, M14, Z_EN, ALU_Z: std_logic;
 	signal state: integer;
@@ -106,25 +118,27 @@ architecture struct of iitbcpu is
 	RegisterFile        : Register_file port map (IR_out(11 downto 9), IR_out(8 downto 6), M34_out, M56_out, PC_out, RF_W, Clk, RF_D1, RF_D2, RF_all0, RF_all1, RF_all2, RF_all3, RF_all4, RF_all5, RF_all6);
 	
 	state_5 <= std_logic_vector(to_unsigned(state, 5));
-	ALU_inst            : ALU port map (M78_out, M91011_out, state_5, ALU_C, ALU_Z);
+	ALU_inst            : ALU_RISC port map (M78_out, M91011_out, state_5, ALU_C, ALU_Z);
 	
-	T1                  : Register_16 port map (clk, T1_W, RF_D1, T1_out);
-	T2                  : Register_16 port map (clk, T2_W, M14_out, T2_out);
-	T3                  : Register_16 port map (clk, T3_W, M11_out, T3_out);
+	T1                  : reg16 port map (clk, T1_W, RF_D1, T1_out);
+	T2                  : reg16 port map (clk, T2_W, M14_out, T2_out);
+	T3                  : reg16 port map (clk, T3_W, M12_out, T3_out);
 	
 	SE1                 : SE_9to16 port map (IR_out(8 downto 0), SE9_out);
 	SE2                 : SE_6to16 port map (IR_out(5 downto 0), SE6_out);
+	SE3					  : SE_6to15 port map (IR_out(5 downto 0), SE6_15_out);
+	left_shift			  : n1_bit_left port map (SE6_15_out, shifted_out);
 	Concat_msb          : CCM port map (IR_out(7 downto 0), CCM_out);
 	Concat_lsb          : CCL port map (IR_out(7 downto 0), CCL_out);
 	
-	M1_inst             : mux_16bit_2x1 port map (M12_out, RF_D2, M1, M1_out);
+	M1_inst             : mux_16bit_2x1 port map (M13_out, RF_D2, M1, M1_out);
 	M2_inst             : mux_16bit_2x1 port map (PC_out, T3_out, M2, M2_out);
-	M34_inst            : mux_3bit_4x1 port map (IR_out(11 downto 9), IR_out(5 downto 3), IR_out(8 downto 6), "000", M4, M3, M34_out);
-	M56_inst            : mux_16bit_4x1 port map (T3_out, CCM_out, CCL_out, PC_out, M6, M5, M56_out);
-	M78_inst            : mux_16bit_4x1 port map (PC_out, T1_out, T1_out, T2_out, M8, M7, M78_out);
-	M91011_inst         : mux_16bit_8x1 port map ("0000000000000010", T2_out, SE6_out, SE9_out, M10, M9, M910_out);
+	M34_inst            : mux_3bit_4x1 port map (IR_out(11 downto 9), IR_out(5 downto 3), IR_out(8 downto 6), IR_out(8 downto 6), M3, M4, M34_out);
+	M56_inst            : mux_16bit_4x1 port map (T3_out, CCM_out, CCL_out, PC_out, M5, M6, M56_out);
+	M78_inst            : mux_16bit_4x1 port map (PC_out, T1_out, T1_out, T2_out, M7, M8, M78_out);
+	M91011_inst         : mux_16bit_8x1 port map ("0000000000000010", T2_out, SE6_out, SE9_out, shifted_out, "0000000000000000", "0000000000000000", "0000000000000000", "0000000000000000", M11, M10, M9, M91011_out);
 	M12_inst            : mux_16bit_4x1 port map (ALU_C, mem_out, M12, M12_out);
-	M13_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M13, M14_out);
+	M13_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M13, M13_out);
 	M14_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M14, M14_out);
 	
 	InstReg<= IR_out;
