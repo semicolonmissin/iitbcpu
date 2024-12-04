@@ -41,7 +41,7 @@ begin
         t2_w_var  <= '0';
         t3_w_var  <= '0';
         z_en_var  <= '0';
-	op_var <= '000';
+	op_var <= "000";
 
         case state is
             when 0 =>
@@ -50,7 +50,7 @@ begin
             when 1 =>
                 m13_var <= '1';
                 pc_w_var <= '1';
-		op_var <= '000';
+		op_var <= "000";
 
             when 2 =>
                 t1_w_var <= '1';
@@ -64,7 +64,7 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '000';
+		op_var <= "000";
 
             when 5 =>
                 m4_var <= '1';
@@ -74,13 +74,13 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '100';
+		op_var <= "100";
 
             when 7 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '101';
+		op_var <= "101";
 
             when 8 =>
                 m3_var <= '1';
@@ -90,20 +90,20 @@ begin
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '001';
+		op_var <= "001";
 
             when 10 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '010';
+		op_var <= "010";
 
             when 11 =>
                 m8_var <= '1';
                 m11_var <= '1';
                 t3_w_var <= '1';
                 m13_var <= '1';
-		op_var <= '110';
+		op_var <= "110";
 
             when 13 =>
                 rf_w_var <= '1';
@@ -121,7 +121,7 @@ begin
                 m8_var <= '1';
                 m10_var <= '1';
                 t3_w_var <= '1';
-		op_var <= '000';
+		op_var <= "000";
 
             when 17 =>
                 m2_var <= '1';
@@ -145,7 +145,7 @@ begin
             when 22 =>
                 m8_var <= '1';
                 m11_var <= '1';
-		op__var <= '100';
+		op_var <= "100";
 
             when 23 =>
                 m9_var <= '1';
@@ -164,7 +164,7 @@ begin
                 m9_var <= '1';
                 m13_var <= '1';
 		pc_w_var <= '1';
-		op_var <= '000';
+		op_var <= "000";
 
             when 27 =>
                 m1_var <= '1';
@@ -192,7 +192,7 @@ begin
                 t2_w_var  <= '0';
                 t3_w_var  <= '0';
 					 z_en_var  <= '0';
-		op_var <= '000';
+		op_var <= "000";
         end case;
 
         -- Assign the values to the output signals
