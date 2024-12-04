@@ -75,6 +75,7 @@ begin
 						  next_state <= s8;
 					 elsif operation = "0000" then 
 						  next_state <= s5;
+	    end if;
 					 
             when s5 =>
                 next_state <= s0;
