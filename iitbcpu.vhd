@@ -98,11 +98,11 @@ architecture struct of iitbcpu is
 	end component;
 ---------------------------------------------------------------------------------------
 	signal IR_out, PC_out, mem_out, RF_D1, RF_D2 : std_logic_vector(15 downto 0);
-	signal M1_out, M2_out,M56_out, M78_out, M91011_out, M12_out, M13_out, M14_out: std_logic_vector(15 downto 0);
+	signal M1_out, M2_out,M56_out, M78_out, M91011_out, M12_out, M13_out: std_logic_vector(15 downto 0);
 	signal M34_out: std_logic_vector(2 downto 0);
 	signal ALU_C, T1_out, T2_out, T3_out, SE9_out, SE6_out, SE6_15_out,shifted_out, CCM_out, CCL_out: std_logic_vector(15 downto 0);
 	signal PC_W, IR_W, T1_W, T2_W, T3_W, RF_W, MW: std_logic;
-	signal M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, M14, Z_EN, ALU_Z: std_logic;
+	signal M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, Z_EN, ALU_Z: std_logic;
 	signal state: integer;
 	signal state_5: std_logic_vector(4 downto 0);
 	signal RF_all0, RF_all1, RF_all2, RF_all3, RF_all4, RF_all5, RF_all6, RF_all7: std_logic_vector(15 downto 0);
@@ -139,7 +139,6 @@ architecture struct of iitbcpu is
 	M91011_inst         : mux_16bit_8x1 port map ("0000000000000010", T2_out, SE6_out, SE9_out, shifted_out, "0000000000000000", "0000000000000000", "0000000000000000", M11, M10, M9, M91011_out);
 	M12_inst            : mux_16bit_2x1 port map (ALU_C, mem_out, M12, M12_out);
 	M13_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M13, M13_out);
-	M14_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M14, M14_out);
 	
 	InstReg<= IR_out;
 	ProgCount<= PC_out;
