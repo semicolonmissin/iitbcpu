@@ -50,7 +50,8 @@ architecture struct of iitbcpu is
     port (
         state : in integer;
         alu_z : in std_logic;
-        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic
+        m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, pc_w, mw, ir_w, rf_w, t1_w, t2_w, t3_w, z_en : out std_logic;
+	op : out std_logic_vector(2 downto 0)
     );
 	end component;
 	
@@ -99,7 +100,7 @@ architecture struct of iitbcpu is
 ---------------------------------------------------------------------------------------
 	signal IR_out, PC_out, mem_out, RF_D1, RF_D2 : std_logic_vector(15 downto 0);
 	signal M1_out, M2_out,M56_out, M78_out, M91011_out, M12_out, M13_out: std_logic_vector(15 downto 0);
-	signal M34_out: std_logic_vector(2 downto 0);
+	signal M34_out,operator: std_logic_vector(2 downto 0);
 	signal ALU_C, T1_out, T2_out, T3_out, SE9_out, SE6_out, SE6_15_out,shifted_out, CCM_out, CCL_out: std_logic_vector(15 downto 0);
 	signal PC_W, IR_W, T1_W, T2_W, T3_W, RF_W, MW: std_logic;
 	signal M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, Z_EN, ALU_Z: std_logic;
@@ -109,7 +110,7 @@ architecture struct of iitbcpu is
 	begin
 	
 	FSM_instance        : FSM port map (clk,Reset,IR_out(15 downto 12), state);
-	Datapath_instance   : data_path port map(state, ALU_Z, M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, M14, PC_W, MW, IR_W, RF_W, T1_W, T2_W, T3_W, Z_EN); 
+	Datapath_instance   : data_path port map(state, ALU_Z, M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11, M12, M13, PC_W, MW, IR_W, RF_W, T1_W, T2_W, T3_W, Z_EN, operator); 
 	
 		
 	ProgramCounter      : Reg16 port map (clk, PC_W, M1_out, PC_out);
@@ -117,8 +118,7 @@ architecture struct of iitbcpu is
 	InstructionRegister : Reg16 port map (clk, IR_W, mem_out, IR_out);
 	RegisterFile        : Register_file port map (IR_out(11 downto 9), IR_out(8 downto 6), M34_out, M56_out, PC_out, RF_W, Clk, RF_D1, RF_D2, RF_all0, RF_all1, RF_all2, RF_all3, RF_all4, RF_all5, RF_all6, RF_all7);
 	
-	state_5 <= std_logic_vector(to_unsigned(state, 5));
-	ALU_inst            : ALU_RISC port map (M78_out, M91011_out, state_5, ALU_C, ALU_Z);
+	ALU_inst            : ALU_RISC port map (M78_out, M91011_out, operator, ALU_C, ALU_Z);
 	
 	T1                  : reg16 port map (clk, T1_W, RF_D1, T1_out);
 	T2                  : reg16 port map (clk, T2_W, RF_D2, T2_out);
@@ -139,6 +139,15 @@ architecture struct of iitbcpu is
 	M91011_inst         : mux_16bit_8x1 port map ("0000000000000010", T2_out, SE6_out, SE9_out, shifted_out, "0000000000000000", "0000000000000000", "0000000000000000", M11, M10, M9, M91011_out);
 	M12_inst            : mux_16bit_2x1 port map (ALU_C, mem_out, M12, M12_out);
 	M13_inst            : mux_16bit_2x1 port map (PC_out, ALU_C, M13, M13_out);
+
+	BOE: process(ALU_Z)
+	begin
+		if ALU_Z = '1' then
+			M13 <= '1';
+		else
+			M13 <= M13;
+		end if;
+	end process;
 	
 	InstReg<= IR_out;
 	ProgCount<= PC_out;
